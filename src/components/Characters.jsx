@@ -22,7 +22,7 @@ Characters.propTypes = {
   characters: PropTypes.arrayOf(PropTypes.shape({
     image: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    description: PropTypes.string
+    status: PropTypes.string
   })).isRequired
 };
 

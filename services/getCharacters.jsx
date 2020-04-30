@@ -8,3 +8,15 @@ export const getCharacters = (page = 1) => {
     })));
 };
 
+export const getDetails = (req) => {
+  return fetch(`https://rickandmortyapi.com/api/character/${req.params.id}`)
+    .then(res => res.json())
+    .then(json => json.results.map(({ name, status, image, species }) => ({
+      name,
+      status,
+      image,
+      species
+    })));
+};
+
+

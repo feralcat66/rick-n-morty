@@ -5,6 +5,7 @@ import {
   Switch
 } from 'react-router-dom';
 import CharacterList from '../container/Characterlist.jsx';
+import CharacterDetailPage from '../container/CharacterDetails.jsx';
 
 console.log(CharacterList);
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
       <Router>
         <Switch>
           <Route exact path="/" component={CharacterList} />
+          <Route exact path="/:id" component={CharacterDetailPage} />
         </Switch>
       </Router>
     </div>

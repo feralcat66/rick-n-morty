@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import CharacterDetail from '../src/components/characterDetail';
+import { getDetails } from '../services/getCharacters.jsx';
 
-const Character = ({ image, name, status }) => (
-  <section>
-    <img src={image} alt={name} />
-    <h2>{name}</h2>
-    <p>{status}</p>
-  </section>
-);
+const CharacterDetailPage = ({ match }) => {
+  const [character, setCharacter] = useState(null);
 
-Character.propTypes = {
-  image: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired
+  useEffect(() => {
+    getDetails(match.params.id)
+      .then(character => setCharacter(character));
+  }, []);
+
+  return <CharacterDetail name={character.name}
+    species={character.species}
+    status={character.status}
+    image={character.image} />;
 };
 
-export default Character;
+CharacterDetailPage.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired
+};
+
+export default CharacterDetailPage;

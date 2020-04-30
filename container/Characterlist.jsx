@@ -1,53 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { getCharacters } from '../getCharacters.js';
-import Character from '../container/CharacterDetails.jsx';
+import Characters from '../src/components/Character';
+import { getCharacters } from '../services/getCharacters';
 
-const CharacterList = () => {
-
+const CharactersList = () => {
+  const [page, setPage] = useState(1);
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
-    getCharacters()
-      .then(setCharacters => Character(setCharacters));
-   
+    getCharacters(page)
+  
+      .then(fetchedCharacters => setCharacters(fetchedCharacters));
+  }, [page]);
 
-  }, []);
+  const changePage = by => setPage(prevPage => prevPage + by);
 
   return (
     <>
-      {characters.map (char => 
-        <div key={char.id} className="charContainer">
-          <h2>{char.name}</h2>
-          <img className="charImage" 
-            src={char.image} 
-            alt={''}
-          />           
-        </div>
-      )
-      }
+      <button onClick={() => changePage(-1)} disabled={page === 1}>&lt;</button>
+      <button onClick={() => changePage(1)} disabled={characters.length < 20}>&gt;</button>
+      <Characters characters={characters} />
     </>
   );
 };
-export default CharacterList;
-
-// export default function MyComp() {
-//   const [newCharacters, setCharacters] = useState([]);
-
-//   useEffect(() => {
-//     getCharacters()
-//       .then(newCharacters => setCharacters(newCharacters));
-//   }, []);
-
-//   return (
-//     <>
-//       <ul>
-//         {characters.map(character => (
-//           <li key={character.id}>
-//             <p>{character.name}</p>
-//           </li>
-//         ))}
-//       </ul>
-//     </>
-//   );
-// }
+export default CharactersList;
 
